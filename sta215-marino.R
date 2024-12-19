@@ -1,8 +1,10 @@
-## Project:  STA 215, Spring 2024, Final Project
+##################################################################################
+
+## Project:  STA 215, Fall 2024, Final Project
 # Located:   Posit Cloud
 # File Name: lorde songs
-# Date:      2024_2_29
-# Who:       Kevin Janas
+# Date:      2024_12_18
+# Who:       Anna Marino
 
 
 
@@ -27,16 +29,15 @@ data <- raw_data %>%
 ############### Table 1: descriptive statistics    ####################   
 ##################################################################################
 
-table(data$absent_problem)
+table(raw_data$absent_problem)
 
-summary(data$reading_score)
+summary(raw_data$reading_score)
 sd(data$reading_score)
 
-summary(data$students_per_district)
-sd(data$students_per_district)
+table(raw_data$grades_offered)
 
-summary(data$student_teacher_ratio)
-sd(data$student_teacher_ratio)
+summary(raw_data$expenses_per_student)
+sd(data$expenses_per_student)
 
 
 
@@ -44,23 +45,23 @@ sd(data$student_teacher_ratio)
 #################### Figure 1: boxplot             ####################   
 ##################################################################################
 # BOX PLOT
-boxplot(data$reading_score ~data$absent_problem)
-anova <- aov(data$reading_score ~ data$absent_problem)
+boxplot(raw_data$reading_score ~raw_data$absent_problem)
+anova <- aov(raw_data$reading_score ~ raw_data$absent_problem)
 summary(anova)
 ##################################################################################
 ####################   Figure 2: scatter plot             ####################   
 ##################################################################################
-linear_plot <- plot(data$students_per_district, data$student_teacher_ratio)
+linear_plot <- plot(raw_data$reading_score, raw_data$spending_per_student)
 print(linear_plot)
 
 # add x line and y line for means
-meany <- mean(data$student_teacher_ratio)
-meanx <- mean(data$students_per_district)
+meany <- mean(raw_data$reading_score)
+meanx <- mean(raw_data$funding_per_student)
 
 abline(v = meanx, col = "black")
 abline(h = meany, col = "black")
 
-linear_relationship <- lm(data$student_teacher_ratio ~ students_per_district, data = data)
+linear_relationship <- lm(raw_data$reading_score ~ raw_data$spending_per_student, raw_data = raw_data)
 summary(linear_relationship)
 
 
@@ -71,12 +72,54 @@ abline(linear_relationship, col = "red")
 ####################  Figure 3: residual plot                ####################   
 ##################################################################################
 # Plot the residuals
-plot(data$students_per_district, residuals(linear_relationship))
-
+plot(raw_data$spending_per_student)
+plot(raw_data$reading_score)
+abline(h = 0, col = "red")
 # Add a horizontal line at zero to indicate the baseline
 abline(h = 0, col = "red")
 
 ##################################################################################
+####################  Table 2: contingency table                ####################   
+##################################################################################
+table(raw_data$reading_score, raw_data$spending_per_student)
+chisq.test(raw_data$school_district_demographics, raw_data$absent_problem) data = data
+# Residuals vs. Predictor Variable
+plot(raw_data$spending_per_student, residuals,
+     xlab = "Expenses per Student",
+     ylab = "Residuals",
+     main = "Residual Plot")
+abline(h = 0, col = "red", lwd = 2)  # Add a horizontal line at 0
+
+model <- lm(reading_score ~ spending_per_student, data = data)
+
+residuals <- residunding_per_student residuals
+     xlab = "Spending per Student"
+     ylab = "Residuals"
+     main = "Residual Plot: Reading Score vs. Spending per Student"
+abline(h = 0, col = "red", lwd = 2)
+
+plot(raw_data$spending_per_student)
+     xlab = "Spending per Student"
+     ylab = "Residuals"
+     main = "Residual Plot: Reading Score vs. Spending per Student"
+abline(h = 0, col = "red", lwd = 2)
+
+plot(raw_data$funding_per_student, residuals(linear_model), 
+     main = "Residual Plot", 
+     xlab = "Funding Per Student", 
+     ylab = "Residuals")
+
+plot(data$funding_per_student, residuals(linear_model), 
+     main = "Residual Plot", 
+     xlab = "Funding Per Student", 
+     ylab = "Residuals")
+
+plot(raw_data$spending_per_student, residuals(linear_model), 
+     main = "Residual Plot", 
+     xlab = "Funding Per Student", 
+     ylab = "Residuals")
+
+
 ####################  Table 2: contingency table                ####################   
 ##################################################################################
 table(data$grades_offered, data$absent_problem)
